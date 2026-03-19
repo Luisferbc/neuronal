@@ -15,7 +15,7 @@ lr_model = train_lr()
 
 x_input = st.number_input("Ingresa un valor de X", value=10.0)
 
-nn_pred = nn_model.predict(np.array([x_input]))[0][0]
+nn_pred = nn_model.predict(np.array([x_input]))[0]
 lr_pred = lr_model.predict([[x_input]])[0]
 
 st.subheader("📌 Predicciones")
@@ -27,7 +27,7 @@ ys = np.array([-2, 1, 4, 7, 10, 13])
 
 x_range = np.linspace(-2, 12, 100)
 
-nn_preds = nn_model.predict(x_range).flatten()
+nn_preds = nn_model.predict(x_range.reshape(-1, 1))
 lr_preds = lr_model.predict(x_range.reshape(-1, 1))
 
 fig, ax = plt.subplots()
@@ -36,7 +36,7 @@ ax.plot(x_range, nn_preds, label="Red Neuronal")
 ax.plot(x_range, lr_preds, linestyle="dashed", label="Regresión Lineal")
 ax.legend()
 
-st.pyplot(fig)
+st.line_chart(history["loss"])
 
 st.subheader("📉 Pérdida del modelo NN")
 st.line_chart(history.history['loss'])
